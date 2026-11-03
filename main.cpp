@@ -101,6 +101,17 @@ bool data_valida(int data) {
     return true;
 }
 
+bool atendimento_ocupado(Atendimento *atendimentos, int quantidade, Atendimento novo) {
+
+    for (int 1 = 0; i < quantidade; i++) {
+        if (atendimentos[i].data == novo.data and atendimentos[i].hora == novo.hora and 
+            atendimentos[i].profissional == novo.profissional and atendimentos[i].unidade == novo.unidade) {
+                return true;
+        }
+    }
+    return false;
+}
+
 void cadastrar_atendimento(Atendimento &atendimento) {
 
     cout << "Digite o tipo de servico: ";
@@ -151,8 +162,6 @@ void cadastrar_atendimento(Atendimento &atendimento) {
     }
 
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-    cout << "Atendimento cadastrado com sucesso!" << endl;
 }
 
 void mostrar_atendimentos(Atendimento *atendimentos, int quantidade, int i) {
@@ -291,16 +300,31 @@ int main() {
 
         switch (opcao) {
 
-            case 1:
-
-                if (quantidade == capacidade) {
-                    aumentar_memoria(atendimentos, capacidade);
-                }
-
-                cadastrar_atendimento(atendimentos[quantidade]);
-                quantidade++;
-
+            
+            case 1: {
+				
+				Atendimento novo;
+				
+				cadastrar_atendimento(novo);
+				
+				if (atendimento_ocupado(atendimentos, quantidade, novo)) {
+					
+					cout << "Horario ja ocupado!" << endl;
+				}
+				else {
+				
+					if (quantidade == capacidade) {
+				
+						aumentar_memoria(atendimentos, capacidade);
+					}
+					
+					atendimentos[quantidade] = novo;
+					quantidade++;
+				
+			cout << "Atendimento cadastrado com sucesso!" << endl;
+		}
                 break;
+			}
 
             case 2:
 
