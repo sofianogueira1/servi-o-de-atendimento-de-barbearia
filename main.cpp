@@ -69,6 +69,37 @@ int busca_binaria(Atendimento *atendimentos, int inicio, int fim, string servico
 
     return busca_binaria(atendimentos, meio + 1, fim, servico);
 }
+void apagar_atendimento(Atendimento *atendimentos, int &quantidade) {
+    
+    if (quantidade == 0) {
+        cout << "Nenhum atendimento cadastrado!" << endl;
+        return;
+    }
+
+    string cliente;
+    cout << "Digite o nome do cliente para remover: ";
+    getline(cin, cliente);
+
+    int posicao = -1;
+
+    for (int i = 0; i < quantidade; i++) {
+        if (atendimentos[i].cliente == cliente) {
+            posicao = i;
+            break;
+        }
+    }
+
+    if (posicao == -1) {
+        cout << "Cliente nao encontrado!" << endl;
+        return;
+    }
+
+    for (int i = posicao; i < quantidade - 1; i++) {
+        atendimentos[i] = atendimentos[i + 1];
+    }
+
+    quantidade--;
+}
 
 bool data_valida(int data) {
 
@@ -286,7 +317,8 @@ int main() {
         cout << "1 - Cadastrar atendimento" << endl;
         cout << "2 - Listar atendimentos" << endl;
         cout << "3 - Buscar atendimento" << endl;
-        cout << "4 - Salvar e sair" << endl;
+		cout << "4 - Apagar atendimento" << endl;
+        cout << "5 - Salvar e sair" << endl;
         cout << "Escolha uma opcao: ";
 
         if (!(cin >> opcao)) {
@@ -373,7 +405,23 @@ int main() {
                 break;
             }
 
-            case 4:
+			case 4: {
+
+				if (quantidade == 0) {
+                    cout << "Nenhum atendimento cadastrado!" << endl;
+                    break;
+                }
+                
+                apagar_atendimento(atendimentos, quantidade);
+                
+                salvar_arquivo(atendimentos, quantidade);
+
+				cout << "Atendimento removido com sucesso!" << endl;
+                
+                break;
+			}
+
+            case 5:
 
                 ordenar(atendimentos, quantidade);
                 salvar_arquivo(atendimentos, quantidade);
@@ -384,10 +432,10 @@ int main() {
 
             default:
 
-                cout << "Opcao invalida! Escolha de 1 a 4." << endl;
+                cout << "Opcao invalida! Escolha de 1 a 5." << endl;
         }
 
-    } while (opcao != 4);
+    } while (opcao != 5);
 
     delete[] atendimentos;
 
