@@ -394,12 +394,16 @@ int main() {
                 }
                 else {
                     cout << "Servico encontrado!" << endl;
+                    cout << "Tipo de serviço: " 
+						<< atendimentos[posicao].tipo_de_servico << endl;
                     cout << "Cliente: "
-                         << atendimentos[posicao].cliente << endl;
+                        << atendimentos[posicao].cliente << endl;
+                    cout << "Unidade: "
+						<< atendimentos[posicao].unidade << endl;
                     cout << "Profissional: "
-                         << atendimentos[posicao].profissional << endl;
+                        << atendimentos[posicao].profissional << endl;
                     cout << "Valor: R$ " << fixed << setprecision(2)
-                         << atendimentos[posicao].valor << endl;
+                        << atendimentos[posicao].valor << endl;
                 }
 
                 break;
